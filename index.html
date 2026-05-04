@@ -78,6 +78,8 @@
         max-width: 900px;
         margin: auto;
         text-align: center;
+        display: flex;
+        justify-content: center;
       }
 
       .card {
@@ -110,6 +112,17 @@
         pointer-events: none;
         z-index: 0;
       }
+      .dog-img {
+        background-image: url("hund.png");
+        width: auto;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        height: 50rem;
+        border-radius: 250px;
+        width: 400px;
+        height: 400px;
+        position: relative;
+      }
     </style>
   </head>
   <body>
@@ -138,6 +151,10 @@
 
         <div id="surprise" class="surprise">❤️ Ich hab dich ganz doll lieb ❤️</div>
       </div>
+    </div>
+
+    <div class="section">
+      <img class="dog-img" src="/hund.png" alt="Ein süßer Hund mit Party Hut" />
     </div>
 
     <script>
