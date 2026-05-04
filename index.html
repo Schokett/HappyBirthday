@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Papa</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Carter+One&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+        color: rgb(233, 233, 233);
+        overflow-x: hidden;
+      }
+
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        font-family: "Carter One", system-ui;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      h1 {
+        font-size: 4em;
+        margin: 0;
+        letter-spacing: 2px;
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #fff;
+        }
+        to {
+          text-shadow:
+            0 0 30px #00eaff,
+            0 0 50px #00eaff;
+        }
+      }
+
+      .subtitle {
+        margin-top: 6rem;
+        font-size: 1.5em;
+        opacity: 0.8;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .scroll-btn {
+        margin-top: 40px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        background: #00eaff;
+        color: black;
+        cursor: pointer;
+        font-size: 1em;
+        transition: 0.3s;
+      }
+
+      .scroll-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .section {
+        padding: 80px 20px;
+        max-width: 900px;
+        margin: auto;
+        text-align: center;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 30px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        font-size: clamp(1rem, 1.5rem, 3rem);
+      }
+
+      .surprise {
+        margin-top: 30px;
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: 0.5s;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="confetti"></canvas>
+
+    <div class="hero">
+      <h1 class="hero-header">
+        Happy Birthday
+        <br />
+        🎉Papa🎉
+      </h1>
+      <div class="subtitle">Ein halbes Jahrhundert Präzision, Erfahrung und Stärke.</div>
+      <button class="scroll-btn" onclick="scrollToContent()">Start</button>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <h2>Danke für alles</h2>
+        <p>
+          Danke, dass du mein Papa bist und immer für mich da warst. Du warst immer mein Vorbild –
+          und bist es bis heute. Ich kenne keinen Menschen, der so viel Charisma, Intellekt und
+          Wärme ausstrahlt wie du.
+        </p>
+
+        <button class="scroll-btn" onclick="showSurprise()">Überraschung</button>
+
+        <div id="surprise" class="surprise">❤️ Ich hab dich ganz doll lieb ❤️</div>
+      </div>
+    </div>
+
+    <script>
+      function scrollToContent() {
+        window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+      }
+
+      function showSurprise() {
+        document.getElementById("surprise").classList.add("show");
+        launchConfetti();
+      }
+
+      // simple confetti
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+      let pieces = [];
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      function launchConfetti() {
+        for (let i = 0; i < 150; i++) {
+          pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            size: Math.random() * 8 + 4,
+            speed: Math.random() * 3 + 2,
+          });
+        }
+      }
+
+      function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach((p) => {
+          p.y += p.speed;
+          ctx.fillStyle = `hsl(${Math.random() * 360},100%,60%)`;
+          ctx.fillRect(p.x, p.y, p.size, p.size);
+        });
+        pieces = pieces.filter((p) => p.y < canvas.height);
+        requestAnimationFrame(update);
+      }
+
+      update();
+    </script>
+  </body>
+</html>
